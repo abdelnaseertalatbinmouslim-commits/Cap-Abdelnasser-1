@@ -1,0 +1,37 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "students": {
+      "$studentId": {
+        ".read": "auth != null && auth.uid === ('student_' + $studentId) || (auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary')",
+        ".write": "auth == null && !data.exists() && newData.hasChildren(['name','phone','grade','pin','status','createdAt']) && newData.child('status').val() === 'pending' || (auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary')",
+        "pin": { ".read": "auth != null && auth.uid === ('student_' + $studentId) || (auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary')" },
+        "status": { ".write": "auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary'" }
+      }
+    },
+    "content": {
+      ".read": "auth != null",
+      "$id": { ".write": "auth != null && (root.child('adminUsers').child(auth.uid).child('role').val() === 'primary' || root.child('adminUsers').child(auth.uid).child('role').val() === 'backup')" }
+    },
+    "quizzes": {
+      ".read": "auth != null",
+      "$id": { ".write": "auth != null && (root.child('adminUsers').child(auth.uid).child('role').val() === 'primary' || root.child('adminUsers').child(auth.uid).child('role').val() === 'backup')" }
+    },
+    "quiz_results": {
+      "$studentId": {
+        ".read": "auth != null && (auth.uid === ('student_' + $studentId) || root.child('adminUsers').child(auth.uid).child('role').val() === 'primary')",
+        "$resultId": {
+          ".write": "auth != null && auth.uid === ('student_' + $studentId) && !data.exists()"
+        }
+      }
+    },
+    "notifications": {
+      ".read": "auth != null",
+      "$id": { ".write": "auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary'" }
+    },
+    "adminUsers": {
+      "$uid": { ".read": "auth != null && auth.uid === $uid || (auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary')", ".write": "auth != null && root.child('adminUsers').child(auth.uid).child('role').val() === 'primary'" }
+    }
+  }
+}

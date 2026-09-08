@@ -1,0 +1,2 @@
+/* Compatibility redirect: the platform design lives in index.css. */
+@import url("./index.css");
