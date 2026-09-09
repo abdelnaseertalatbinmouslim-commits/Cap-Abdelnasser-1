@@ -17,23 +17,13 @@
         :root {
             --bg: #07090d;
             --surface: rgba(16, 19, 27, 0.88);
-            --surface-2: rgba(22, 26, 36, 0.78);
-            --surface-3: rgba(255, 255, 255, 0.045);
-
             --gold: #d9b45a;
             --gold-light: #f2d98b;
-            --gold-dark: #9d7930;
-
             --text: #f7f7f8;
             --muted: #9da4b2;
             --border: rgba(255, 255, 255, 0.09);
-
-            --success: #55d99b;
             --danger: #ff7180;
-
-            --shadow:
-                0 35px 100px rgba(0, 0, 0, 0.48);
-
+            --shadow: 0 35px 100px rgba(0, 0, 0, 0.48);
             --radius: 28px;
         }
 
@@ -45,7 +35,6 @@
 
         html {
             min-height: 100%;
-            scroll-behavior: smooth;
         }
 
         body {
@@ -54,7 +43,6 @@
             overflow-x: hidden;
 
             font-family: "Cairo", sans-serif;
-
             color: var(--text);
 
             background:
@@ -85,9 +73,7 @@
             text-decoration: none;
         }
 
-        /* ================================
-           BACKGROUND
-        ================================= */
+        /* Background */
 
         .background {
             position: fixed;
@@ -125,7 +111,6 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(2px);
         }
 
         .orb-one {
@@ -170,9 +155,7 @@
             background-size: 5px 5px;
         }
 
-        /* ================================
-           PAGE
-        ================================= */
+        /* Main layout */
 
         .page {
             position: relative;
@@ -194,9 +177,7 @@
             padding: 45px 0;
         }
 
-        /* ================================
-           BRAND / VISUAL
-        ================================= */
+        /* Visual */
 
         .visual {
             position: relative;
@@ -264,7 +245,6 @@
         .brand-text strong {
             font-size: 15px;
             font-weight: 900;
-            letter-spacing: -0.3px;
         }
 
         .brand-text span {
@@ -354,9 +334,7 @@
             line-height: 2;
         }
 
-        /* ================================
-           PROFILE IMAGE
-        ================================= */
+        /* Portrait */
 
         .portrait-wrap {
             position: relative;
@@ -438,13 +416,10 @@
             height: 100%;
 
             object-fit: cover;
-
             object-position: center;
         }
 
-        /* ================================
-           AUTH
-        ================================= */
+        /* Login card */
 
         .auth-area {
             display: flex;
@@ -557,9 +532,7 @@
             line-height: 1.9;
         }
 
-        /* ================================
-           FORM
-        ================================= */
+        /* Form */
 
         #loginForm {
             margin-top: 30px;
@@ -588,8 +561,7 @@
             width: 100%;
             height: 54px;
 
-            padding:
-                0 16px;
+            padding: 0 16px;
 
             border:
                 1px solid var(--border);
@@ -660,9 +632,7 @@
             background: rgba(217,180,90,.08);
         }
 
-        /* ================================
-           OPTIONS
-        ================================= */
+        /* Options */
 
         .options {
             display: flex;
@@ -706,9 +676,7 @@
             text-decoration: underline;
         }
 
-        /* ================================
-           CHANNEL
-        ================================= */
+        /* Channel */
 
         .channel {
             display: flex;
@@ -759,9 +727,7 @@
             text-decoration: underline;
         }
 
-        /* ================================
-           BUTTON
-        ================================= */
+        /* Submit */
 
         .submit {
             width: 100%;
@@ -811,13 +777,11 @@
             transform: translateY(0);
         }
 
-        .submit span {
+        .submit span:last-child {
             font-size: 17px;
         }
 
-        /* ================================
-           MESSAGE
-        ================================= */
+        /* Message */
 
         #loginMsg {
             min-height: 24px;
@@ -834,9 +798,7 @@
             line-height: 1.8;
         }
 
-        /* ================================
-           DIVIDER
-        ================================= */
+        /* Divider */
 
         .divider {
             display: flex;
@@ -865,9 +827,7 @@
             font-weight: 800;
         }
 
-        /* ================================
-           SECONDARY BUTTON
-        ================================= */
+        /* Register */
 
         .register {
             width: 100%;
@@ -922,9 +882,7 @@
             color: var(--gold-light);
         }
 
-        /* ================================
-           RESPONSIVE
-        ================================= */
+        /* Responsive */
 
         @media (max-width: 980px) {
 
@@ -1002,8 +960,6 @@
 
             .visual-title {
                 font-size: 36px;
-
-                letter-spacing: -1.2px;
             }
 
             .visual-description {
@@ -1073,9 +1029,7 @@
 
     <main class="page">
 
-        <!-- ================================
-             VISUAL SIDE
-        ================================= -->
+        <!-- Visual Side -->
 
         <section class="visual">
 
@@ -1131,9 +1085,7 @@
 
         </section>
 
-        <!-- ================================
-             LOGIN SIDE
-        ================================= -->
+        <!-- Login Side -->
 
         <section class="auth-area">
 
@@ -1307,7 +1259,14 @@
 
     </main>
 
-    <script src="login.js"></script>
+    <!-- IMPORTANT:
+         login.js uses ES module imports,
+         so it MUST be loaded as type="module".
+    -->
+    <script
+        type="module"
+        src="login.js"
+    ></script>
 
     <script>
         const passwordInput =
@@ -1343,4 +1302,4 @@
     </script>
 
 </body>
-  </html>
+</html>
