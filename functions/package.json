@@ -1,0 +1,16 @@
+{
+  "name": "coach-abdelnasser-functions",
+  "description": "Backend Cloud Functions for Coach AbdelNasser platform",
+  "private": true,
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo \"No lint configured\""
+  },
+  "dependencies": {
+    "firebase-admin": "^13.4.0",
+    "firebase-functions": "^6.3.2"
+  }
+}
