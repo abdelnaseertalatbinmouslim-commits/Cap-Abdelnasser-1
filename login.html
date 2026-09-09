@@ -1,138 +1,1346 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-  <link rel="icon" href="1783950091830.jpg">
-  <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="1783950091830.jpg">
 
-  <title>تسجيل الدخول — Coach AbdelNasser</title>
+    <title>تسجيل الدخول | Coach AbdelNasser</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg: #07090d;
+            --surface: rgba(16, 19, 27, 0.88);
+            --surface-2: rgba(22, 26, 36, 0.78);
+            --surface-3: rgba(255, 255, 255, 0.045);
+
+            --gold: #d9b45a;
+            --gold-light: #f2d98b;
+            --gold-dark: #9d7930;
+
+            --text: #f7f7f8;
+            --muted: #9da4b2;
+            --border: rgba(255, 255, 255, 0.09);
+
+            --success: #55d99b;
+            --danger: #ff7180;
+
+            --shadow:
+                0 35px 100px rgba(0, 0, 0, 0.48);
+
+            --radius: 28px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            min-height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            overflow-x: hidden;
+
+            font-family: "Cairo", sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 82% 8%,
+                    rgba(217, 180, 90, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 10% 88%,
+                    rgba(70, 94, 145, 0.10),
+                    transparent 30%
+                ),
+                #07090d;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ================================
+           BACKGROUND
+        ================================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .grid {
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 54px 54px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 85%
+                );
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+        }
+
+        .orb-one {
+            width: 480px;
+            height: 480px;
+            top: -250px;
+            right: -170px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(217, 180, 90, 0.16),
+                    transparent 68%
+                );
+        }
+
+        .orb-two {
+            width: 420px;
+            height: 420px;
+            left: -230px;
+            bottom: -190px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(86, 113, 173, 0.10),
+                    transparent 68%
+                );
+        }
+
+        .noise {
+            position: absolute;
+            inset: 0;
+            opacity: 0.018;
+
+            background-image:
+                radial-gradient(
+                    rgba(255,255,255,.8) .6px,
+                    transparent .6px
+                );
+
+            background-size: 5px 5px;
+        }
+
+        /* ================================
+           PAGE
+        ================================= */
+
+        .page {
+            position: relative;
+            z-index: 1;
+
+            width: min(1240px, calc(100% - 40px));
+            min-height: 100vh;
+            min-height: 100svh;
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+
+            align-items: center;
+
+            gap: 70px;
+
+            padding: 45px 0;
+        }
+
+        /* ================================
+           BRAND / VISUAL
+        ================================= */
+
+        .visual {
+            position: relative;
+            min-height: 650px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .brand {
+            position: absolute;
+            top: 12px;
+            right: 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            transition: 0.25s ease;
+        }
+
+        .brand:hover {
+            transform: translateY(-2px);
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+
+            padding: 3px;
+
+            border-radius: 15px;
+
+            border: 1px solid rgba(217, 180, 90, 0.45);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(217, 180, 90, 0.20),
+                    rgba(217, 180, 90, 0.035)
+                );
+
+            box-shadow:
+                0 0 30px rgba(217, 180, 90, 0.08);
+
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 11px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .brand-text strong {
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-text span {
+            margin-top: 5px;
+
+            color: var(--muted);
+
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: 2px;
+        }
+
+        .visual-content {
+            width: min(500px, 100%);
+            margin-inline: auto;
+        }
+
+        .visual-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 18px;
+
+            padding: 8px 13px;
+
+            border: 1px solid rgba(217, 180, 90, 0.22);
+            border-radius: 999px;
+
+            background: rgba(217, 180, 90, 0.06);
+
+            color: var(--gold-light);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 1.2px;
+        }
+
+        .visual-tag::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--gold);
+
+            box-shadow:
+                0 0 12px rgba(217, 180, 90, 0.8);
+        }
+
+        .visual-title {
+            margin-bottom: 15px;
+
+            font-size: clamp(38px, 5vw, 65px);
+            line-height: 1.08;
+            font-weight: 900;
+
+            letter-spacing: -2px;
+        }
+
+        .visual-title span {
+            display: block;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff,
+                    var(--gold-light)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .visual-description {
+            max-width: 440px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        /* ================================
+           PROFILE IMAGE
+        ================================= */
+
+        .portrait-wrap {
+            position: relative;
+
+            width: min(410px, 88%);
+            aspect-ratio: 0.82;
+
+            margin: 42px auto 0;
+        }
+
+        .portrait-glow {
+            position: absolute;
+            inset: 12%;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(217, 180, 90, 0.16),
+                    transparent 65%
+                );
+
+            filter: blur(30px);
+        }
+
+        .ring {
+            position: absolute;
+            inset: 0;
+
+            border: 1px solid rgba(217, 180, 90, 0.15);
+            border-radius: 48% 48% 42% 42%;
+
+            transform: rotate(-5deg);
+        }
+
+        .ring-two {
+            inset: 5%;
+
+            border-color: rgba(217, 180, 90, 0.10);
+
+            transform: rotate(7deg);
+        }
+
+        .portrait {
+            position: absolute;
+            inset: 7% 10% 5%;
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(217, 180, 90, 0.30);
+
+            border-radius: 32px;
+
+            background: #10131a;
+
+            box-shadow:
+                var(--shadow),
+                0 0 60px rgba(217, 180, 90, 0.08);
+        }
+
+        .portrait::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent 55%,
+                    rgba(0,0,0,.28)
+                );
+        }
+
+        .portrait img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            object-position: center;
+        }
+
+        /* ================================
+           AUTH
+        ================================= */
+
+        .auth-area {
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            position: relative;
+
+            width: min(560px, 100%);
+
+            padding: 38px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.085);
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(25, 29, 39, 0.94),
+                    rgba(11, 14, 20, 0.91)
+                );
+
+            box-shadow: var(--shadow);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            top: -150px;
+            left: -100px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(217,180,90,.13),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+        .card-top {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            color: var(--gold-light);
+
+            font-size: 10px;
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+        .back {
+            color: var(--muted);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .back:hover {
+            color: var(--gold-light);
+        }
+
+        .heading {
+            position: relative;
+        }
+
+        .heading h1 {
+            margin-bottom: 10px;
+
+            font-size: clamp(30px, 4vw, 42px);
+            line-height: 1.2;
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
+        }
+
+        .heading p {
+            color: var(--muted);
+
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        /* ================================
+           FORM
+        ================================= */
+
+        #loginForm {
+            margin-top: 30px;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #dfe2e8;
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 54px;
+
+            padding:
+                0 16px;
+
+            border:
+                1px solid var(--border);
+
+            outline: none;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            color: var(--text);
+
+            font-size: 13px;
+
+            direction: rtl;
+
+            transition:
+                border-color .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .input-wrap input::placeholder {
+            color: #707887;
+        }
+
+        .input-wrap input:focus {
+            border-color:
+                rgba(217, 180, 90, 0.58);
+
+            background:
+                rgba(217, 180, 90, 0.035);
+
+            box-shadow:
+                0 0 0 4px rgba(217,180,90,.065);
+        }
+
+        .password-wrap input {
+            padding-left: 55px;
+        }
+
+        .password-toggle {
+            position: absolute;
+
+            left: 7px;
+            top: 7px;
+
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: transparent;
+
+            color: #9299a6;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--gold-light);
+            background: rgba(217,180,90,.08);
+        }
+
+        /* ================================
+           OPTIONS
+        ================================= */
+
+        .options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin: 4px 0 17px;
+        }
+
+        .remember {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            cursor: pointer;
+        }
+
+        .remember input {
+            width: 16px;
+            height: 16px;
+
+            accent-color: var(--gold);
+
+            cursor: pointer;
+        }
+
+        .forgot {
+            color: var(--gold-light);
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* ================================
+           CHANNEL
+        ================================= */
+
+        .channel {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid rgba(217,180,90,.13);
+
+            border-radius: 14px;
+
+            background:
+                rgba(217,180,90,.035);
+
+            cursor: pointer;
+        }
+
+        .channel input {
+            flex: 0 0 auto;
+
+            width: 17px;
+            height: 17px;
+
+            margin-top: 2px;
+
+            accent-color: var(--gold);
+
+            cursor: pointer;
+        }
+
+        .channel span {
+            color: #9fa6b3;
+
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .channel a {
+            color: var(--gold-light);
+            font-weight: 800;
+        }
+
+        .channel a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================================
+           BUTTON
+        ================================= */
+
+        .submit {
+            width: 100%;
+            height: 56px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold-light),
+                    var(--gold)
+                );
+
+            color: #17130b;
+
+            font-size: 13px;
+            font-weight: 900;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 15px 35px rgba(217,180,90,.16);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                filter .2s ease;
+        }
+
+        .submit:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 20px 45px rgba(217,180,90,.22);
+
+            filter: brightness(1.04);
+        }
+
+        .submit:active {
+            transform: translateY(0);
+        }
+
+        .submit span {
+            font-size: 17px;
+        }
+
+        /* ================================
+           MESSAGE
+        ================================= */
+
+        #loginMsg {
+            min-height: 24px;
+
+            margin-top: 12px;
+
+            text-align: center;
+
+            color: var(--danger);
+
+            font-size: 10px;
+            font-weight: 700;
+
+            line-height: 1.8;
+        }
+
+        /* ================================
+           DIVIDER
+        ================================= */
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            margin: 21px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background:
+                rgba(255,255,255,.075);
+        }
+
+        .divider span {
+            color: #68707d;
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        /* ================================
+           SECONDARY BUTTON
+        ================================= */
+
+        .register {
+            width: 100%;
+            min-height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #e6e8ec;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            transition: .2s ease;
+        }
+
+        .register:hover {
+            border-color:
+                rgba(217,180,90,.25);
+
+            background:
+                rgba(217,180,90,.055);
+
+            color: var(--gold-light);
+        }
+
+        .admin-link {
+            display: block;
+
+            margin-top: 17px;
+
+            text-align: center;
+
+            color: #727a88;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+        .admin-link:hover {
+            color: var(--gold-light);
+        }
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 980px) {
+
+            .page {
+                grid-template-columns: 1fr;
+
+                width: min(680px, calc(100% - 30px));
+
+                gap: 20px;
+
+                padding: 35px 0;
+            }
+
+            .visual {
+                min-height: auto;
+
+                padding-top: 70px;
+            }
+
+            .visual-content {
+                text-align: center;
+            }
+
+            .visual-description {
+                margin-inline: auto;
+            }
+
+            .portrait-wrap {
+                width: min(280px, 70vw);
+
+                margin-top: 28px;
+            }
+
+            .auth-area {
+                width: 100%;
+            }
+
+            .brand {
+                top: 5px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .page {
+                width: calc(100% - 20px);
+
+                padding: 20px 0 28px;
+            }
+
+            .visual {
+                padding: 65px 5px 0;
+            }
+
+            .brand {
+                right: 5px;
+            }
+
+            .brand-logo {
+                width: 42px;
+                height: 42px;
+            }
+
+            .brand-text strong {
+                font-size: 13px;
+            }
+
+            .brand-text span {
+                font-size: 7px;
+            }
+
+            .visual-tag {
+                font-size: 8px;
+            }
+
+            .visual-title {
+                font-size: 36px;
+
+                letter-spacing: -1.2px;
+            }
+
+            .visual-description {
+                font-size: 11px;
+            }
+
+            .portrait-wrap {
+                width: min(240px, 65vw);
+
+                margin-top: 22px;
+            }
+
+            .card {
+                padding: 25px 19px;
+
+                border-radius: 23px;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+            .heading p {
+                font-size: 10px;
+            }
+
+            .input-wrap input {
+                height: 52px;
+
+                font-size: 12px;
+            }
+
+            .submit {
+                height: 54px;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .visual {
+                padding-top: 60px;
+            }
+
+            .visual-title {
+                font-size: 31px;
+            }
+
+            .portrait-wrap {
+                width: 210px;
+            }
+
+            .card {
+                padding: 22px 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="bg-grid"></div>
-  <div class="noise"></div>
-
-  <div class="auth-wrap">
-
-    <a class="brand auth-brand" href="index.html">
-      <span class="logo-ring">
-        <img src="1783950091830.jpg" alt="">
-      </span>
-
-      <span>
-        <b>Coach AbdelNasser</b>
-        <em>EDUCATIONAL PLATFORM</em>
-      </span>
-    </a>
-
-    <div class="auth-card glass">
-
-      <div class="auth-head">
-        <span class="tag">WELCOME BACK</span>
-
-        <h1>تسجيل الدخول</h1>
-
-        <p>
-          للطالب استخدم الهاتف والـPIN. الإدارة تستخدم البريد وكلمة المرور.
-        </p>
-      </div>
-
-      <form id="loginForm">
-
-        <label>
-          رقم الهاتف أو بريد الإدارة
-
-          <input
-            id="identity"
-            required
-            autocomplete="username"
-            placeholder="01xxxxxxxxx أو admin@email.com"
-          >
-        </label>
-
-        <label>
-          كلمة المرور / PIN
-
-          <input
-            id="password"
-            type="password"
-            required
-            autocomplete="current-password"
-            placeholder="••••••••"
-          >
-        </label>
-
-        <div class="between">
-
-          <label class="check">
-            <input id="remember" type="checkbox">
-            تذكرني
-          </label>
-
-          <a href="#" id="helpLink">مساعدة</a>
-
-        </div>
-
-        <label class="channel-check">
-
-          <input id="channelGate" type="checkbox" required>
-
-          <span>
-            انضممت إلى
-            <a
-              href="https://whatsapp.com/channel/0029VbDGX1rJpe8ZM6H5h02T"
-              target="_blank"
-              rel="noopener"
-            >
-              قناة WhatsApp
-            </a>
-            قبل الدخول.
-          </span>
-
-        </label>
-
-        <button
-          class="btn gold xl block"
-          type="submit"
-        >
-          دخول المنصة
-          <span>↗</span>
-        </button>
-
-        <div id="loginMsg" class="message"></div>
-
-      </form>
-
-      <div class="divider">
-        <span>أو</span>
-      </div>
-
-      <a
-        class="btn dark block"
-        href="register.html"
-      >
-        إنشاء حساب طالب جديد
-      </a>
-
-      <a
-        class="auth-footer"
-        href="admin-login.html"
-      >
-        دخول الإدارة
-      </a>
-
+    <div class="background">
+        <div class="grid"></div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="noise"></div>
     </div>
 
-  </div>
+    <main class="page">
 
-  <!-- Login Logic -->
-  <script
-    type="module"
-    src="login.js"
-  ></script>
+        <!-- ================================
+             VISUAL SIDE
+        ================================= -->
+
+        <section class="visual">
+
+            <a class="brand" href="index.html">
+
+                <span class="brand-logo">
+                    <img
+                        src="1783950091830.jpg"
+                        alt="Coach AbdelNasser"
+                    >
+                </span>
+
+                <span class="brand-text">
+                    <strong>Coach AbdelNasser</strong>
+                    <span>EDUCATIONAL PLATFORM</span>
+                </span>
+
+            </a>
+
+            <div class="visual-content">
+
+                <span class="visual-tag">
+                    EDUCATION • SPORTS • SUCCESS
+                </span>
+
+                <h2 class="visual-title">
+                    مستقبلك
+                    <span>بيبدأ من هنا.</span>
+                </h2>
+
+                <p class="visual-description">
+                    ادخل إلى منصتك التعليمية واستكمل رحلتك
+                    في التعلم، التدريب، والتميز.
+                </p>
+
+                <div class="portrait-wrap">
+
+                    <div class="portrait-glow"></div>
+
+                    <div class="ring"></div>
+                    <div class="ring ring-two"></div>
+
+                    <div class="portrait">
+                        <img
+                            src="1783950091830.jpg"
+                            alt="Coach AbdelNasser"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================================
+             LOGIN SIDE
+        ================================= -->
+
+        <section class="auth-area">
+
+            <div class="card">
+
+                <div class="card-top">
+
+                    <span class="eyebrow">
+                        WELCOME BACK
+                    </span>
+
+                    <a
+                        class="back"
+                        href="index.html"
+                    >
+                        ← الرئيسية
+                    </a>
+
+                </div>
+
+                <div class="heading">
+
+                    <h1>
+                        تسجيل الدخول
+                    </h1>
+
+                    <p>
+                        للطالب استخدم رقم الهاتف والـ PIN،
+                        والإدارة تستخدم البريد وكلمة المرور.
+                    </p>
+
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="field">
+
+                        <label
+                            class="field-label"
+                            for="identity"
+                        >
+                            رقم الهاتف أو بريد الإدارة
+                        </label>
+
+                        <div class="input-wrap">
+
+                            <input
+                                id="identity"
+                                name="identity"
+                                type="text"
+                                required
+                                autocomplete="username"
+                                inputmode="text"
+                                placeholder="01xxxxxxxxx أو admin@email.com"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label
+                            class="field-label"
+                            for="password"
+                        >
+                            كلمة المرور / PIN
+                        </label>
+
+                        <div class="input-wrap password-wrap">
+
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                required
+                                autocomplete="current-password"
+                                placeholder="••••••••"
+                            >
+
+                            <button
+                                class="password-toggle"
+                                id="passwordToggle"
+                                type="button"
+                                aria-label="إظهار كلمة المرور"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="options">
+
+                        <label class="remember">
+
+                            <input
+                                id="remember"
+                                type="checkbox"
+                            >
+
+                            <span>تذكرني</span>
+
+                        </label>
+
+                        <a
+                            class="forgot"
+                            href="forgot-password.html"
+                        >
+                            نسيت كلمة المرور؟
+                        </a>
+
+                    </div>
+
+                    <label class="channel">
+
+                        <input
+                            id="channelGate"
+                            type="checkbox"
+                            required
+                        >
+
+                        <span>
+                            أؤكد أنني انضممت إلى
+                            <a
+                                href="https://whatsapp.com/channel/0029VbDGX1rJpe8ZM6H5h02T"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                قناة WhatsApp
+                            </a>
+                            قبل الدخول إلى المنصة.
+                        </span>
+
+                    </label>
+
+                    <button
+                        class="submit"
+                        type="submit"
+                    >
+                        <span>دخول المنصة</span>
+                        <span>↗</span>
+                    </button>
+
+                    <div id="loginMsg"></div>
+
+                </form>
+
+                <div class="divider">
+                    <span>أو</span>
+                </div>
+
+                <a
+                    class="register"
+                    href="register.html"
+                >
+                    إنشاء حساب طالب جديد
+                </a>
+
+                <a
+                    class="admin-link"
+                    href="admin-login.html"
+                >
+                    دخول الإدارة
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="login.js"></script>
+
+    <script>
+        const passwordInput =
+            document.getElementById("password");
+
+        const passwordToggle =
+            document.getElementById("passwordToggle");
+
+        if (passwordInput && passwordToggle) {
+
+            passwordToggle.addEventListener(
+                "click",
+                function () {
+
+                    const isPassword =
+                        passwordInput.type === "password";
+
+                    passwordInput.type =
+                        isPassword ? "text" : "password";
+
+                    passwordToggle.textContent =
+                        isPassword ? "○" : "◉";
+
+                    passwordToggle.setAttribute(
+                        "aria-label",
+                        isPassword
+                            ? "إخفاء كلمة المرور"
+                            : "إظهار كلمة المرور"
+                    );
+                }
+            );
+        }
+    </script>
 
 </body>
-</html>
+  </html>
