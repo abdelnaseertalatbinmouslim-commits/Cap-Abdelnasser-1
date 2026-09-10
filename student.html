@@ -4,16 +4,180 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="assets/1783950091830.jpg">
-    
-    <!-- ربط ملف الـ CSS بشكل صحيح ومباشر -->
-    <link rel="stylesheet" href="css/index.css">
-    
     <title>لوحة الطالب — Coach AbdelNasser</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg: #07090d;
+            --surface: rgba(16, 19, 27, 0.88);
+            --gold: #d9b45a;
+            --gold-light: #f2d98b;
+            --text: #f7f7f8;
+            --muted: #9da4b2;
+            --border: rgba(255, 255, 255, 0.09);
+            --danger: #ff7180;
+            --shadow: 0 35px 100px rgba(0, 0, 0, 0.48);
+            --radius: 28px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Cairo", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        .bg-grid {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .noise, .cursor-glow { display: none; }
+
+        .student-shell {
+            position: relative; z-index: 1;
+            max-width: 1300px; margin: 0 auto;
+            padding: 20px;
+        }
+
+        .student-header {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(20px);
+        }
+
+        .student-header-inner {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .brand {
+            display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text);
+        }
+
+        .logo-ring {
+            width: 45px; height: 45px; border-radius: 12px; overflow: hidden; border: 1px solid var(--gold);
+        }
+        .logo-ring img, .student-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .brand span b { display: block; font-size: 14px; color: var(--text); }
+        .brand span em { font-style: normal; font-size: 9px; color: var(--gold-light); letter-spacing: 1px; }
+
+        .top-user {
+            display: flex; align-items: center; gap: 15px;
+        }
+
+        .student-avatar {
+            width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 1px solid var(--border);
+        }
+
+        .top-user b { display: block; font-size: 13px; color: var(--text); }
+        .top-user small { color: var(--muted); font-size: 11px; }
+
+        .btn {
+            background: var(--gold); color: #111; font-weight: 800; padding: 10px 20px;
+            border-radius: 12px; border: none; cursor: pointer; text-decoration: none; display: inline-block;
+            transition: 0.2s;
+        }
+        .btn:hover { filter: brightness(1.1); }
+        .btn.gold { background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+        .btn-small { padding: 6px 14px; font-size: 11px; }
+        .danger-button { background: rgba(255, 113, 128, 0.15); color: var(--danger); border: 1px solid rgba(255, 113, 128, 0.3); }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--border);
+            width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: grid; place-items: center;
+        }
+
+        .dashboard-layout {
+            display: grid; grid-template-columns: 260px 1fr; gap: 25px;
+        }
+
+        .sidebar {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px;
+            height: fit-content;
+        }
+
+        .side-brand { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+        .side-brand b { display: block; font-size: 15px; color: var(--text); }
+        .muted { color: var(--muted); font-size: 11px; }
+
+        .sidebar nav { display: flex; flex-direction: column; gap: 8px; }
+        .sidebar nav a {
+            padding: 12px 15px; color: var(--muted); text-decoration: none; border-radius: 12px; font-size: 13px; font-weight: 700;
+            transition: 0.2s;
+        }
+        .sidebar nav a:hover, .sidebar nav a.active {
+            background: rgba(217, 180, 90, 0.1); color: var(--gold-light);
+        }
+
+        .dashboard-content { background: transparent; }
+        .page-heading { margin-bottom: 25px; }
+        .tag {
+            background: rgba(217, 180, 90, 0.1); color: var(--gold-light); padding: 5px 12px; border-radius: 20px;
+            font-size: 10px; font-weight: 800; display: inline-block; margin-bottom: 8px; border: 1px solid rgba(217, 180, 90, 0.2);
+        }
+        .page-heading h1 { font-size: 26px; font-weight: 900; margin-bottom: 5px; color: var(--text); }
+        .page-heading p { color: var(--muted); font-size: 12px; }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        .student-welcome-strip {
+            background: linear-gradient(145deg, rgba(25, 29, 39, 0.9), rgba(11, 14, 20, 0.9));
+            border: 1px solid var(--border); border-radius: 20px; padding: 25px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
+        }
+        .student-welcome-strip h2 { font-size: 20px; color: var(--text); margin: 5px 0; }
+        .student-welcome-strip p { color: var(--muted); font-size: 12px; }
+
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+        .stat-card, .ui-card, .content-card, .quiz-card, .result-card, .notification-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px;
+        }
+        .stat-card-label { color: var(--muted); font-size: 11px; margin-bottom: 8px; }
+        .stat-card-value { font-size: 28px; font-weight: 900; color: var(--gold-light); margin-bottom: 5px; }
+        .stat-card-meta { color: var(--muted); font-size: 10px; }
+
+        .card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+        .card-meta { color: var(--muted); font-size: 11px; line-height: 1.6; margin-bottom: 15px; }
+        
+        .empty-state { text-align: center; color: var(--muted); padding: 30px; font-size: 12px; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+        .list-item:last-child { border-bottom: none; }
+        .list-item b { font-size: 12px; color: var(--text); }
+        .list-item .meta { font-size: 10px; color: var(--muted); }
+
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #1e2430; color: #fff; padding: 10px 20px; border-radius: 10px;
+            border: 1px solid var(--border); font-size: 12px; z-index: 9999;
+            transition: 0.3s;
+        }
+        .toast.hide { opacity: 0; pointer-events: none; }
+
+        @media(max-width: 900px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <div class="bg-grid"></div>
-    <div class="noise"></div>
-    <div class="cursor-glow"></div>
 
     <div class="student-shell">
         <header class="student-header">
@@ -108,7 +272,7 @@
                     <section id="tab-content" class="tab-panel">
                         <div class="page-heading">
                             <div>
-                                <h2 style="color:var(--text)">مكتبة المحتوى</h2>
+                                <h2>مكتبة المحتوى</h2>
                                 <p>المحتوى المنشور للفرقة الخاصة بك.</p>
                             </div>
                         </div>
@@ -118,7 +282,7 @@
                     <section id="tab-quizzes" class="tab-panel">
                         <div class="page-heading">
                             <div>
-                                <h2 style="color:var(--text)">الاختبارات</h2>
+                                <h2>الاختبارات</h2>
                                 <p>الاختبارات التي تستهدف فرقتك.</p>
                             </div>
                         </div>
@@ -128,7 +292,7 @@
                     <section id="tab-results" class="tab-panel">
                         <div class="page-heading">
                             <div>
-                                <h2 style="color:var(--text)">النتائج</h2>
+                                <h2>النتائج</h2>
                                 <p>نتائجك فقط.</p>
                             </div>
                         </div>
@@ -138,7 +302,7 @@
                     <section id="tab-notifications" class="tab-panel">
                         <div class="page-heading">
                             <div>
-                                <h2 style="color:var(--text)">الإشعارات</h2>
+                                <h2>الإشعارات</h2>
                                 <p>التنبيهات العامة أو الخاصة بفرقتك.</p>
                             </div>
                         </div>
@@ -148,10 +312,10 @@
                     <section id="tab-profile" class="tab-panel">
                         <div class="ui-card panel-pad">
                             <div class="grid-2">
-                                <div><span class="muted">الاسم</span><h3 id="profileName" style="color:var(--text)">—</h3></div>
-                                <div><span class="muted">الهاتف</span><h3 id="profilePhone" style="color:var(--text)">—</h3></div>
-                                <div><span class="muted">الفرقة</span><h3 id="profileGrade" style="color:var(--text)">—</h3></div>
-                                <div><span class="muted">حالة الحساب</span><h3 id="profileStatus" style="color:var(--text)">—</h3></div>
+                                <div><span class="muted">الاسم</span><h3 id="profileName" style="color:var(--text); font-size:16px; margin-top:5px;">—</h3></div>
+                                <div><span class="muted">الهاتف</span><h3 id="profilePhone" style="color:var(--text); font-size:16px; margin-top:5px;">—</h3></div>
+                                <div><span class="muted">الفرقة</span><h3 id="profileGrade" style="color:var(--text); font-size:16px; margin-top:5px;">—</h3></div>
+                                <div><span class="muted">حالة الحساب</span><h3 id="profileStatus" style="color:var(--text); font-size:16px; margin-top:5px;">—</h3></div>
                             </div>
                         </div>
                     </section>
@@ -163,7 +327,6 @@
 
     <div id="toast" class="toast hide"></div>
 
-    <!-- تشغيل ملف الجافاسكريبت الخاص بالطالب -->
     <script type="module" src="js/student.js"></script>
 </body>
 </html>
